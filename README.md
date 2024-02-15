@@ -58,7 +58,7 @@ This repo is ChatGPT re-created as Telegram Bot. **And it works great.**
 3. Edit `config/config.example.yml` to set your tokens and run 2 commands below (*if you're advanced user, you can also edit* `config/config.example.env`):
     ```bash
     mv config/config.example.yml config/config.yml
-    mv config/config.example.env config/config.env
+    mv config.example.env .env
     ```
 
 4. 🔥 And now **run**:
