@@ -28,7 +28,7 @@ services:
     container_name: mongo-express
     image: mongo-express:latest
     ports:
-      - ${MONGO_EXPRESS_HOST:-127.0.0.1}:${MONGO_EXPRESS_PORT:-8081}:${MONGO_EXPRESS_PORT:-8081}
+      - ${MONGO_EXPRESS_HOST:-127.0.0.1}:${MONGO_EXPRESS_PORT:-8081}:8081
     depends_on:
       - mongo
     restart: unless-stopped
