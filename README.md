@@ -18,10 +18,11 @@ This repo is ChatGPT re-created as Telegram Bot. **And it works great.**
 - DALLE 2 (choose 👩‍🎨 Artist mode to generate images)
 - Voice message recognition
 - Code highlighting
-- 15 special chat modes: 👩🏼‍🎓 Assistant, 👩🏼‍💻 Code Assistant, 👩‍🎨 Artist, 🧠 Psychologist, 🚀 Elon Musk and other. You can easily create your own chat modes by editing `config/chat_modes.yml`
+- 17 special chat modes: 👩🏼‍🎓 Assistant, 👩🏼‍💻 Code Assistant, 👩‍🎨 Artist, 🧠 Psychologist, 🚀 Elon Musk and other. You can easily create your own chat modes by editing `config/chat_modes.yml`
 - Support of [ChatGPT API](https://platform.openai.com/docs/guides/chat/introduction)
 - List of allowed Telegram users
 - Track $ balance spent on OpenAI API
+- Multi-language support
 
 <p align="center">
   <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmM2ZWVjY2M4NWQ3ZThkYmQ3MDhmMTEzZGUwOGFmOThlMDIzZGM4YiZjdD1n/unx907h7GSiLAugzVX/giphy.gif" />
@@ -30,6 +31,10 @@ This repo is ChatGPT re-created as Telegram Bot. **And it works great.**
 ---
 
 ## News
+- *24 Feb 2024*: 
+    - Added Multi-language support. Now you can easily switch between languages using config.yml file.
+    - Turkish language translation added
+    - Unauthorized users warning added
 - *21 Apr 2023*:
     - DALLE 2 support
     - Group Chat support (/help_group_chat to get instructions)
@@ -65,6 +70,11 @@ This repo is ChatGPT re-created as Telegram Bot. **And it works great.**
     ```bash
     docker-compose -f docker-compose.yml up --build
     ```
+
+## Language support
+You can easily switch between languages using `config.yml` file. Just change `language` parameter to `en`, `de`, `tr` or `es` and restart the bot.
+
+For help with translations, open LOCALES file and translate the strings in base.po file. Then create a PR with your translation.
 
 ## References
 1. [*Build ChatGPT from GPT-3*](https://learnprompting.org/docs/applied_prompting/build_chatgpt)
