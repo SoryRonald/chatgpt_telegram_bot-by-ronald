@@ -1,0 +1,232 @@
+# Turkish translations for PACKAGE package.
+# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-24 04:32+0300\n"
+"PO-Revision-Date: 2024-02-24 02:22+0300\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: tr_UTF-8\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: bot/bot.py:42
+msgid ""
+"Commands:\n"
+"⚪ /retry – Regenerate last bot answer\n"
+"⚪ /new – Start new dialog\n"
+"⚪ /mode – Select chat mode\n"
+"⚪ /settings – Show settings\n"
+"⚪ /balance – Show balance\n"
+"⚪ /help – Show help\n"
+"\n"
+"🎨 Generate images from text prompts in <b>👩‍🎨 Artist</b> /mode\n"
+"👥 Add bot to <b>group chat</b>: /help_group_chat\n"
+"🎤 You can send <b>Voice Messages</b> instead of text\n"
+msgstr ""
+"Komutlar:\n"
+"⚪ /retry – Son bot cevabını yeniden oluştur\n"
+"⚪ /new – Yeni diyalog başlat\n"
+"⚪ /mode – Sohbet modu seç\n"
+"⚪ /settings – Ayarları göster\n"
+"⚪ /balance – Bakiyeyi göster\n"
+"⚪ /help – Yardımı göster\n"
+"\n"
+"🎨 Metin ipuçlarından <b>👩‍🎨 Artist</b> /mode resimler oluştur\n"
+"👥 Botu <b>grup sohbetine</b> ekleyin: /help_group_chat\n"
+"🎤 Metin yerine <b>Sesli Mesajlar</b> gönderebilirsiniz\n"
+
+#: bot/bot.py:55
+#, python-brace-format
+msgid ""
+"You can add bot to any <b>group chat</b> to help and entertain its "
+"participants!\n"
+"\n"
+"Instructions (see <b>video</b> below):\n"
+"1. Add the bot to the group chat\n"
+"2. Make it an <b>admin</b>, so that it can see messages (all other rights "
+"can be restricted)\n"
+"3. You're awesome!\n"
+"\n"
+"To get a reply from the bot in the chat – @ <b>tag</b> it or <b>reply</b> to "
+"its message.\n"
+"For example: \"{bot_username} write a poem about Telegram\"\n"
+msgstr ""
+"Botu, katılımcılarına yardım etmek ve eğlendirmek için herhangi bir <b>grup "
+"sohbetine</b> ekleyebilirsiniz!\n"
+"\n"
+"Talimatlar (aşağıdaki <b>video</b>ya bakın):\n"
+"1. Botu grup sohbetine ekleyin\n"
+"2. Mesajları görebilsin diye <b>yönetici</b> yapın (diğer tüm haklar "
+"kısıtlanabilir)\n"
+"3. Harikasınız!\n"
+"\n"
+"Botun sohbetten bir yanıt alması için – @ <b>etiket</b>leyin veya mesajına "
+"<b>cevap</b> verin.\n"
+"Örneğin: \"{bot_username} Telegram hakkında bir şiir yaz\"\n"
+
+#: bot/bot.py:138
+msgid ""
+"Hi! I'm <b>ChatGPT</b> bot implemented with OpenAI API 🤖\n"
+"\n"
+msgstr ""
+"Merhaba! Ben OpenAI API'si ile implemente edilmiş bir <b>ChatGPT</b> botuyum "
+"🤖\n"
+"\n"
+
+#: bot/bot.py:172
+msgid "No message to retry"
+msgstr "Yeniden denenecek mesaj yok"
+
+#: bot/bot.py:216
+msgid ""
+"Starting new dialog due to timeout (<b>{config.chat_modes[chat_mode]['name']}"
+"</b> mode) ✅"
+msgstr ""
+"Zaman aşımı nedeniyle yeni diyalog başlatılıyor (<b>{config."
+"chat_modes[chat_mode]['name']}</b> modu) ✅"
+
+#: bot/bot.py:232
+msgid "🥲 You sent <b>empty message</b>. Please, try again!"
+msgstr "🥲 <b>Boş mesaj</b> gönderdiniz. Lütfen tekrar deneyin!"
+
+#: bot/bot.py:308
+#, python-brace-format
+msgid "Something went wrong during completion. Reason: {e}"
+msgstr "Birşeyler tamamlama sırasında yanlış gitti. Sebep: {e}"
+
+#: bot/bot.py:317
+msgid ""
+"✍️ <i>Note:</i> Your current dialog is too long, so your <b>first message</b> "
+"was removed from the context.\n"
+" Send /new command to start new dialog"
+msgstr ""
+"✍️ <i>Not:</i> Mevcut diyalogunuz çok uzun olduğu için <b>ilk mesajınız</b> "
+"bağlamdan kaldırıldı.\n"
+" Yeni bir diyalog başlatmak için /new komutunu gönderin"
+
+#: bot/bot.py:320
+#, python-brace-format
+msgid ""
+"✍️ <i>Note:</i> Your current dialog is too long, so "
+"<b>{n_first_dialog_messages_removed} first messages</b> were removed from "
+"the context.\n"
+" Send /new command to start new dialog"
+msgstr ""
+"✍️ <i>Not:</i> Mevcut diyalogunuz çok uzun olduğu için "
+"<b>{n_first_dialog_messages_removed} ilk mesajınız</b> bağlamdan "
+"kaldırıldı.\n"
+" Yeni bir diyalog başlatmak için /new komutunu gönderin"
+
+#: bot/bot.py:330
+msgid "✅ Canceled"
+msgstr "✅ İptal edildi"
+
+#: bot/bot.py:343
+msgid "⏳ Please <b>wait</b> for a reply to the previous message\n"
+msgstr "⏳ Lütfen önceki mesaja <b>cevap</b> bekleyin\n"
+
+#: bot/bot.py:344
+msgid "Or you can /cancel it"
+msgstr "Ya da /iptal edebilirsiniz"
+
+#: bot/bot.py:405
+msgid ""
+"🥲 Your request <b>doesn't comply</b> with OpenAI's usage policies.\n"
+"What did you write there, huh?"
+msgstr ""
+"🥲 Talebiniz OpenAI'nin kullanım politikalarına <b>uygun değil</b>.\n"
+"Orada ne yazdınız, ha?"
+
+#: bot/bot.py:431
+msgid "Starting new dialog ✅"
+msgstr "Yeni diyalog başlatılıyor ✅"
+
+#: bot/bot.py:447
+msgid "<i>Nothing to cancel...</i>"
+msgstr "<i>İptal edilecek birşey yok...</i>"
+
+#: bot/bot.py:452
+msgid "Select <b>chat mode</b> ({len(config.chat_modes)} modes available):"
+msgstr "Lütfen <b>sohbet modu</b> seçin ({len(config.chat_modes)} mod mevcut):"
+
+#: bot/bot.py:548
+msgid ""
+"\n"
+"Select <b>model</b>:"
+msgstr ""
+"\n"
+"Lütfen <b>model</b> seçin:"
+
+#: bot/bot.py:609
+msgid "🏷️ Details:\n"
+msgstr "🏷️ Detaylar:\n"
+
+#: bot/bot.py:638
+#, python-brace-format
+msgid "You spent <b>{total_n_spent_dollars:.03f}$</b>\n"
+msgstr "Harcadığınız <b>{total_n_spent_dollars:.03f}$</b>\n"
+
+#: bot/bot.py:639
+#, python-brace-format
+msgid ""
+"You used <b>{total_n_used_tokens}</b> tokens\n"
+"\n"
+msgstr ""
+"<b>{total_n_used_tokens}</b> jeton kullandınız\n"
+"\n"
+
+#: bot/bot.py:647
+msgid "🥲 Unfortunately, message <b>editing</b> is not supported"
+msgstr "🥲 Maalesef, mesaj <b>düzenleme</b> desteklenmiyor"
+
+#: bot/bot.py:659
+#, python-brace-format
+msgid ""
+"🔒 This group is not on the allowed list. Please contact the <b>owner</b> to "
+"gain access and send your group ID {update.message.chat_id}."
+msgstr ""
+"🔒 Bu grup izin verilen listesinde değil. Lütfen erişim sağlamak için "
+"<b>sağlayıcı</b> ile iletişime geçin ve grubunuzun ID'sini {update.message."
+"chat_id} gönderin."
+
+#: bot/bot.py:664
+#, python-brace-format
+msgid ""
+"🔒 You are not on the allowed list. Please contact the <b>owner</b> to gain "
+"access and send your user ID {update.message.from_user.id}."
+msgstr ""
+"🔒 Siz izin verilen listesinde değilsiniz. Lütfen erişim sağlamak için "
+"<b>sağlayıcı</b> ile iletişime geçin ve kullanıcı ID'nizi {update.message."
+"from_user.id} gönderin."
+
+#: bot/bot.py:697
+msgid "Start new dialog"
+msgstr "Yeni diyalog başlat"
+
+#: bot/bot.py:698
+msgid "Select chat mode"
+msgstr "Sohbet modu seç"
+
+#: bot/bot.py:699
+msgid "Re-generate response for previous query"
+msgstr "Önceki soru için yanıtı yeniden oluştur"
+
+#: bot/bot.py:700
+msgid "Show balance"
+msgstr "Bakiyeyi göster"
+
+#: bot/bot.py:701
+msgid "Show settings"
+msgstr "Ayarları göster"
+
+#: bot/bot.py:702
+msgid "Show help message"
+msgstr "Yardım mesajını göster"
