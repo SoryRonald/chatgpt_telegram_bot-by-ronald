@@ -49,3 +49,9 @@ regenerate-mo: create-translation-files
 # Read the docker compose logs
 logs:
 	@docker compose logs -f --tail=500
+
+up:
+	@docker compose up -d --build
+
+down:
+	@docker compose down -v
