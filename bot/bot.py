@@ -29,6 +29,8 @@ from telegram.constants import ParseMode, ChatAction
 import config
 import database
 import openai_utils
+from config import _
+
 
 # setup
 db = database.Database()
@@ -37,7 +39,7 @@ logger = logging.getLogger(__name__)
 user_semaphores = {}
 user_tasks = {}
 
-HELP_MESSAGE = """Commands:
+HELP_MESSAGE = _("""Commands:
 ⚪ /retry – Regenerate last bot answer
 ⚪ /new – Start new dialog
 ⚪ /mode – Select chat mode
@@ -48,9 +50,9 @@ HELP_MESSAGE = """Commands:
 🎨 Generate images from text prompts in <b>👩‍🎨 Artist</b> /mode
 👥 Add bot to <b>group chat</b>: /help_group_chat
 🎤 You can send <b>Voice Messages</b> instead of text
-"""
+""")
 
-HELP_GROUP_CHAT_MESSAGE = """You can add bot to any <b>group chat</b> to help and entertain its participants!
+HELP_GROUP_CHAT_MESSAGE = _("""You can add bot to any <b>group chat</b> to help and entertain its participants!
 
 Instructions (see <b>video</b> below):
 1. Add the bot to the group chat
@@ -59,7 +61,7 @@ Instructions (see <b>video</b> below):
 
 To get a reply from the bot in the chat – @ <b>tag</b> it or <b>reply</b> to its message.
 For example: "{bot_username} write a poem about Telegram"
-"""
+""")
 
 
 def split_text_into_chunks(text, chunk_size):
@@ -133,7 +135,7 @@ async def start_handle(update: Update, context: CallbackContext):
     db.set_user_attribute(user_id, "last_interaction", datetime.now())
     db.start_new_dialog(user_id)
 
-    reply_text = "Hi! I'm <b>ChatGPT</b> bot implemented with OpenAI API 🤖\n\n"
+    reply_text = _("Hi! I'm <b>ChatGPT</b> bot implemented with OpenAI API 🤖\n\n")
     reply_text += HELP_MESSAGE
 
     await update.message.reply_text(reply_text, parse_mode=ParseMode.HTML)
@@ -167,7 +169,7 @@ async def retry_handle(update: Update, context: CallbackContext):
 
     dialog_messages = db.get_dialog_messages(user_id, dialog_id=None)
     if len(dialog_messages) == 0:
-        await update.message.reply_text("No message to retry 🤷‍♂️")
+        await update.message.reply_text(_("No message to retry") + " 🤷‍♂️")
         return
 
     last_dialog_message = dialog_messages.pop()
@@ -211,7 +213,7 @@ async def message_handle(update: Update, context: CallbackContext, message=None,
                 db.get_dialog_messages(user_id)) > 0:
                 db.start_new_dialog(user_id)
                 await update.message.reply_text(
-                    f"Starting new dialog due to timeout (<b>{config.chat_modes[chat_mode]['name']}</b> mode) ✅",
+                    _(f"Starting new dialog due to timeout (<b>{config.chat_modes[chat_mode]['name']}</b> mode) ✅"),
                     parse_mode=ParseMode.HTML)
         db.set_user_attribute(user_id, "last_interaction", datetime.now())
 
@@ -227,7 +229,7 @@ async def message_handle(update: Update, context: CallbackContext, message=None,
             await update.message.chat.send_action(action="typing")
 
             if _message is None or len(_message) == 0:
-                await update.message.reply_text("🥲 You sent <b>empty message</b>. Please, try again!",
+                await update.message.reply_text(_("🥲 You sent <b>empty message</b>. Please, try again!"),
                                                 parse_mode=ParseMode.HTML)
                 return
 
@@ -303,7 +305,7 @@ async def message_handle(update: Update, context: CallbackContext, message=None,
             raise
 
         except Exception as e:
-            error_text = f"Something went wrong during completion. Reason: {e}"
+            error_text = _(f"Something went wrong during completion. Reason: {e}")
             logger.error(error_text)
             await update.message.reply_text(error_text)
             return
@@ -311,9 +313,11 @@ async def message_handle(update: Update, context: CallbackContext, message=None,
         # send message if some messages were removed from the context
         if n_first_dialog_messages_removed > 0:
             if n_first_dialog_messages_removed == 1:
-                text = "✍️ <i>Note:</i> Your current dialog is too long, so your <b>first message</b> was removed from the context.\n Send /new command to start new dialog"
+                text = _(
+                    "✍️ <i>Note:</i> Your current dialog is too long, so your <b>first message</b> was removed from the context.\n Send /new command to start new dialog")
             else:
-                text = f"✍️ <i>Note:</i> Your current dialog is too long, so <b>{n_first_dialog_messages_removed} first messages</b> were removed from the context.\n Send /new command to start new dialog"
+                text = _(
+                    f"✍️ <i>Note:</i> Your current dialog is too long, so <b>{n_first_dialog_messages_removed} first messages</b> were removed from the context.\n Send /new command to start new dialog")
             await update.message.reply_text(text, parse_mode=ParseMode.HTML)
 
     async with user_semaphores[user_id]:
@@ -323,7 +327,7 @@ async def message_handle(update: Update, context: CallbackContext, message=None,
         try:
             await task
         except asyncio.CancelledError:
-            await update.message.reply_text("✅ Canceled", parse_mode=ParseMode.HTML)
+            await update.message.reply_text(_("✅ Canceled"), parse_mode=ParseMode.HTML)
         else:
             pass
         finally:
@@ -336,8 +340,8 @@ async def is_previous_message_not_answered_yet(update: Update, context: Callback
 
     user_id = update.message.from_user.id
     if user_semaphores[user_id].locked():
-        text = "⏳ Please <b>wait</b> for a reply to the previous message\n"
-        text += "Or you can /cancel it"
+        text = _("⏳ Please <b>wait</b> for a reply to the previous message\n")
+        text += _("Or you can /cancel it")
         await update.message.reply_text(text, reply_to_message_id=update.message.id, parse_mode=ParseMode.HTML)
         return True
     else:
@@ -397,7 +401,8 @@ async def generate_image_handle(update: Update, context: CallbackContext, messag
         )
     except openai.error.InvalidRequestError as e:
         if str(e).startswith("Your request was rejected as a result of our safety system"):
-            text = "🥲 Your request <b>doesn't comply</b> with OpenAI's usage policies.\nWhat did you write there, huh?"
+            text = _(
+                "🥲 Your request <b>doesn't comply</b> with OpenAI's usage policies.\nWhat did you write there, huh?")
             await update.message.reply_text(text, parse_mode=ParseMode.HTML)
             return
         else:
@@ -423,7 +428,7 @@ async def new_dialog_handle(update: Update, context: CallbackContext):
     db.set_user_attribute(user_id, "last_interaction", datetime.now())
 
     db.start_new_dialog(user_id)
-    await update.message.reply_text("Starting new dialog ✅")
+    await update.message.reply_text(_("Starting new dialog ✅"))
 
     chat_mode = db.get_user_attribute(user_id, "current_chat_mode")
     await update.message.reply_text(f"{config.chat_modes[chat_mode]['welcome_message']}", parse_mode=ParseMode.HTML)
@@ -439,12 +444,12 @@ async def cancel_handle(update: Update, context: CallbackContext):
         task = user_tasks[user_id]
         task.cancel()
     else:
-        await update.message.reply_text("<i>Nothing to cancel...</i>", parse_mode=ParseMode.HTML)
+        await update.message.reply_text(_("<i>Nothing to cancel...</i>"), parse_mode=ParseMode.HTML)
 
 
 def get_chat_mode_menu(page_index: int):
     n_chat_modes_per_page = config.n_chat_modes_per_page
-    text = f"Select <b>chat mode</b> ({len(config.chat_modes)} modes available):"
+    text = _(f"Select <b>chat mode</b> ({len(config.chat_modes)} modes available):")
 
     # buttons
     chat_mode_keys = list(config.chat_modes.keys())
@@ -540,7 +545,7 @@ def get_settings_menu(user_id: int):
     for score_key, score_value in score_dict.items():
         text += "🟢" * score_value + "⚪️" * (5 - score_value) + f" – {score_key}\n\n"
 
-    text += "\nSelect <b>model</b>:"
+    text += _("\nSelect <b>model</b>:")
 
     # buttons to choose models
     buttons = []
@@ -601,7 +606,7 @@ async def show_balance_handle(update: Update, context: CallbackContext):
     n_generated_images = db.get_user_attribute(user_id, "n_generated_images")
     n_transcribed_seconds = db.get_user_attribute(user_id, "n_transcribed_seconds")
 
-    details_text = "🏷️ Details:\n"
+    details_text = _("🏷️ Details:\n")
     for model_key in sorted(n_used_tokens_dict.keys()):
         n_input_tokens, n_output_tokens = n_used_tokens_dict[model_key]["n_input_tokens"], \
             n_used_tokens_dict[model_key]["n_output_tokens"]
@@ -630,8 +635,8 @@ async def show_balance_handle(update: Update, context: CallbackContext):
 
     total_n_spent_dollars += voice_recognition_n_spent_dollars
 
-    text = f"You spent <b>{total_n_spent_dollars:.03f}$</b>\n"
-    text += f"You used <b>{total_n_used_tokens}</b> tokens\n\n"
+    text = _(f"You spent <b>{total_n_spent_dollars:.03f}$</b>\n")
+    text += _(f"You used <b>{total_n_used_tokens}</b> tokens\n\n")
     text += details_text
 
     await update.message.reply_text(text, parse_mode=ParseMode.HTML)
@@ -639,7 +644,7 @@ async def show_balance_handle(update: Update, context: CallbackContext):
 
 async def edited_message_handle(update: Update, context: CallbackContext):
     if update.edited_message.chat.type == "private":
-        text = "🥲 Unfortunately, message <b>editing</b> is not supported"
+        text = _("🥲 Unfortunately, message <b>editing</b> is not supported")
         await update.edited_message.reply_text(text, parse_mode=ParseMode.HTML)
 
 
@@ -651,12 +656,12 @@ async def unauthorized_access(update: Update, context: CallbackContext) -> None:
     # For non-private (group) chats
     if update.message.chat.type != "private":
         await update.message.reply_text(
-            f"🔒 This group is not on the allowed list. Please contact the <b>owner</b> to gain access and send your group ID {update.message.chat_id}.",
+            _(f"🔒 This group is not on the allowed list. Please contact the <b>owner</b> to gain access and send your group ID {update.message.chat_id}."),
             parse_mode=ParseMode.HTML
         )
     else:  # For private chats
         await update.message.reply_text(
-            f"🔒 You are not on the allowed list. Please contact the <b>owner</b> to gain access and send your user ID {update.message.from_user.id}.",
+            _(f"🔒 You are not on the allowed list. Please contact the <b>owner</b> to gain access and send your user ID {update.message.from_user.id}."),
             parse_mode=ParseMode.HTML
         )
 
@@ -689,12 +694,12 @@ async def error_handle(update: Update, context: CallbackContext) -> None:
 
 async def post_init(application: Application):
     await application.bot.set_my_commands([
-        BotCommand("/new", "Start new dialog"),
-        BotCommand("/mode", "Select chat mode"),
-        BotCommand("/retry", "Re-generate response for previous query"),
-        BotCommand("/balance", "Show balance"),
-        BotCommand("/settings", "Show settings"),
-        BotCommand("/help", "Show help message"),
+        BotCommand("/new", _("Start new dialog")),
+        BotCommand("/mode", _("Select chat mode")),
+        BotCommand("/retry", _("Re-generate response for previous query")),
+        BotCommand("/balance", _("Show balance")),
+        BotCommand("/settings", _("Show settings")),
+        BotCommand("/help", _("Show help message")),
     ])
 
 
